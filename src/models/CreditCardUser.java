@@ -6,9 +6,11 @@ public class CreditCardUser {
     private String number;
     private String date;
     private int cvv;
+    private Integer amount=1000;
 
-    public CreditCardUser(String number, String date, int cvv) {
+    public CreditCardUser(String number, String date, int cvv,Integer amount) {
         this.number = number;
+        this.amount = amount;
         this.date = date;
         this.cvv = cvv;
     }
@@ -19,6 +21,14 @@ public class CreditCardUser {
         this.number = number;
         this.date = date;
         this.cvv = cvv;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public String getNumber() {
