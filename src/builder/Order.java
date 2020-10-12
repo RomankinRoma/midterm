@@ -7,6 +7,7 @@ public class Order {
     String address;
     String date;
     MedCenter medCenter;
+    Integer amount;
     Boolean medicine;
     Boolean food;
 
@@ -15,9 +16,19 @@ public class Order {
         this.id = orderBuilder.id;
         this.address = orderBuilder.address;
         this.date = orderBuilder.date;
+        this.amount = orderBuilder.amount;
         this.medCenter = orderBuilder.medCenter;
         this.medicine = orderBuilder.medicine;
         this.food = orderBuilder.food;
+    }
+
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
     }
 
     public Integer getId() {
@@ -71,7 +82,7 @@ public class Order {
     @Override
     public String toString() {
         if (food!=null || medicine!=null)
-            return getId()+"."+getAddress()+" with addons";
+            return getId()+"."+getAddress()+" toPay:"+getAmount()+" with addons";
         else
             return getId()+"."+getAddress()+" without addons";
     }
@@ -79,12 +90,14 @@ public class Order {
         Integer id;
         String address;
         String date;
+        Integer amount;
         MedCenter medCenter;
         Boolean medicine;
         Boolean food;
 
-        public OrderBuilder(Integer id, String address, String date, MedCenter medCenter) {
+        public OrderBuilder(Integer id, String address,String date, MedCenter medCenter,Integer amount) {
             this.id = id;
+            this.amount = amount;
             this.address = address;
             this.date = date;
             this.medCenter = medCenter;
@@ -92,11 +105,13 @@ public class Order {
 
         public OrderBuilder withMedicine(Boolean medicine){
             this.medicine=medicine;
+            this.amount+=1000;
             return this;
         }
 
         public OrderBuilder withFood(Boolean food){
             this.food=food;
+            this.amount+=1000;
             return this;
         }
 
