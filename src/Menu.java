@@ -4,6 +4,8 @@ import observable.Publisher;
 import observable.Subscriber;
 import observable.User;
 import builder.*;
+import strategyPayment.CreditCard;
+import strategyPayment.PayPal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 public class Menu {
     private List<User> userList=new ArrayList<>();
     private List<MedCenter> medCenters=new ArrayList<MedCenter>();
-
+    private PaymentContext context=new PaymentContext();
     private Publisher medCenter = new MedCenterPublisher();
     OrderFactory orderFactory=new OrderFactory();
     Scanner in = new Scanner(System.in);
@@ -145,5 +147,45 @@ public class Menu {
     public void getUsers(){
         for (User user:userList)
             System.out.println(user.getId()+"."+user.getFullname());
+    }
+    public void payment(Integer id){
+        System.out.println("Choose payment system:\n1.PayPal\n2.Credit card");
+    Integer chose=in.nextInt();
+    if (chose==1){
+        System.out.println("Choose order for pay:");
+        User user=getUser(id);
+        if (user.getOrders().isEmpty())
+            System.out.println("Empty");
+        else
+            for (Order order:user.getOrders()){
+                System.out.println(order.toString());
+            }
+        Integer amount=in.nextInt();
+        for (Order order:user.getOrders()){
+            if (amount==order.getId())
+                amount=order.getAmount();
+        }
+        context.setPaymentSystem(new PayPal());
+        System.out.println(context.payment(amount));
+    }else if (chose==2){
+        System.out.println("Choose order for pay:");
+        User user=getUser(id);
+        if (user.getOrders().isEmpty())
+            System.out.println("Empty");
+        else
+            for (Order order:user.getOrders()){
+                System.out.println(order.toString());
+            }
+        Integer amount=in.nextInt();
+        for (Order order:user.getOrders()){
+            if (amount==order.getId())
+                amount=order.getAmount();
+        }
+        context.setPaymentSystem(new CreditCard());
+        System.out.println(context.payment(amount));
+    }else{
+        System.out.println("Incorrect input!");
+    }
+
     }
 }

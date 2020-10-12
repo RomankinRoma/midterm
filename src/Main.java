@@ -16,9 +16,6 @@ public class Main {
         Integer chose=-1;
         User user=new User(1,"Asdsd ada","12.12.12",new ArrayList<>(),new ArrayList<>());
         menu.getUserList().add(user);
-        Order order=orderFactory.createSimpleOrder(4,"Order","s",null);
-        user.addOrder(order);
-
         menu.getMedCenters().add(new ASAP());
         menu.getMedCenters().add(new SNAKE());
 
@@ -34,6 +31,7 @@ public class Main {
             System.out.println("6.Check current account");
             System.out.println("7.Change account");
             System.out.println("8.Subscribe");
+            System.out.println("9.Payment");
             System.out.println("0.Exit");
             chose=in.nextInt();
             switch (chose){
@@ -62,6 +60,9 @@ public class Main {
                     break;
                 case 8:
                     menu.subscribe(userID);
+                    break;
+                case 9:
+                    menu.payment(userID);
                     break;
                 case 0:
                     System.exit(0);
